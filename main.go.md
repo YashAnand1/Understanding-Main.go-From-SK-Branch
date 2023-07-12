@@ -189,8 +189,8 @@ func convertExcelToCSV(excelFile, csvFile string) {
 - Additionally, if any cell is found to be empty then that cell is skipped.
 ____________________________________________________________________________
 
-### 5. Excel To CSV Conversion
-```
+### 5. Uploading To ETCD
+
 func uploadToEtcd() { //#6
 	// Connect to etcd
 	etcdClient, err := clientv3.New(clientv3.Config{
@@ -246,9 +246,6 @@ func uploadToEtcd() { //#6
 			log.Printf("Failed to marshal server data: %v", err)
 			continue
 		}
-		_, err = etcdClient.Put(context.Background(), etcdKeyData, string(etcdValueData))
-		if err != nil {
-			log.Printf("Failed to upload server data to etcd: %v", err)
 		}
 	}
 

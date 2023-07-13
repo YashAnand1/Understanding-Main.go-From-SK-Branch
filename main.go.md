@@ -1,6 +1,6 @@
 # Understanding 'Main.go' 
 
-**Main.go Reference Link: [Click Here](https://github.com/Keen-And-Able/etcd-inventory/blob/sk/main.go)** | * Bettering The Presentation Is Still In Progress *
+**Main.go Reference Link: [Click Here](https://github.com/Keen-And-Able/etcd-inventory/blob/sk/main.go)** | * THIS DOCUMENT IS STILL IN PROGRESS *
 _________________
 ### 1. Packaging Program
 ```
@@ -590,4 +590,18 @@ func main() { //#8
 ```
 - The `uploadToEtcd()` function is called to start uploading the CSV data to the etcd server.
 
-____
+**(D) Starting API Server**
+```
+	// Start API server
+	log.Println("Starting API server...")
+	http.HandleFunc("/servers/", getServerData)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatalf("Failed to start API server: %v", err)
+	}
+}
+```
+- `log.Println` is used to print the message that the API server is being started.
+- `http.HandleFunc` ensures that whenever the API server would receive a URL path containing `/servers/`, the `getServerData` should be called.
+- `http.ListenAndServe` is assiged to `err` to make sure that the the port being used for communication is `8080` and that there are no errors. If there are any, they will be logged and program will be closed.
+_____

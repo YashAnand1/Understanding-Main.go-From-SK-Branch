@@ -351,7 +351,7 @@ func uploadToEtcd() { //#6
 - In `etcdValue := value`, every header's value is set per iteration. 
 - `etcdClient.Put` is used to have the key-value pairs entered into the etcd. If an error occurs, it is logged with an error message.
 
-**d.3. Setting Key-Value Pairs In ETCD For Data Fields**
+**d.3. Uploading TO ETCD**
 ```	
 	// Set key-value pair for server data
 	etcdKeyData := fmt.Sprintf("/servers/%s/%s/data", serverType, serverIP)

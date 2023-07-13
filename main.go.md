@@ -126,7 +126,7 @@ This code can be understood better by breaking it into 3 different parts, which 
 - Opening CSV
 - Converting XLSX to CSV
 
-**1. Opening excel sheet**
+**a. Opening excel sheet**
 ```
 func convertExcelToCSV(excelFile, csvFile string) {
 	// Open the Excel file
@@ -139,7 +139,7 @@ func convertExcelToCSV(excelFile, csvFile string) {
 - The excel file opened from its defined filepath by mentioning the excelFile variable
 - In case the file is not found or cannot be opened due to an error, the error is logged & program stops.
   
-**2. Creating CSV**
+**b. Creating CSV**
 ```
 // Create the CSV file
 	file, err := os.Create(csvFile)
@@ -152,7 +152,7 @@ func convertExcelToCSV(excelFile, csvFile string) {
 - The CSV file is created and if due to an error, it cannot be created, the error is logged and program stops.
 - Additionally, it is ensured that the created CSV file would close after it is no longer being used.
   
-**3. Converting XLSX to CSV**
+**c. Converting XLSX to CSV**
 ```
 // 	Write data to the CSV file
 	writer := csv.NewWriter(file)
@@ -189,7 +189,7 @@ func convertExcelToCSV(excelFile, csvFile string) {
 - Additionally, if any cell is found to be empty then that cell is skipped.
 ____________________________________________________________________________
 
-### 5. Uploading To ETCD
+### 6. Uploading To ETCD
 ```
 func uploadToEtcd() { //#6
 	// Connect to etcd
@@ -262,7 +262,7 @@ This code can be understood better by breaking it into 4 different parts, which 
 - - Setting key-value pairs for data fields
 - - Setting key-value pairs for server data
 
-**1. Connecting to etcd**
+**a. Connecting to etcd**
 ```
 func uploadToEtcd() { //#6
 	// Connect to etcd
@@ -281,7 +281,7 @@ func uploadToEtcd() { //#6
 - If the connection cannot be established due to an error, logging of error is done and program closed. 
 - Similarly, when the connection between `etcdHost` & `etcdClient` is no longer required, it is to be closed later using `defer etcdClient.Close()`.
 
-**2. Opening the CSV**
+**b. Opening the CSV**
 ```	
 	// Read the CSV file
 	file, err := os.Open(csvFile)
@@ -294,7 +294,7 @@ func uploadToEtcd() { //#6
 - In case the CSV file cannot be opened due to a error, then the error is logged and code exits.
 - Lastly, `defer file.Close()` is used for closing the opened CSV file that was opened, once the work is done.
 
-**3. Parsing the CSV**
+**c. Parsing the CSV**
 ```	
 	// Parse the CSV file
 	reader := csv.NewReader(file)
@@ -306,7 +306,7 @@ func uploadToEtcd() { //#6
 - `reader := csv.NewReader(file)` assigns the previously opened CSV file to 'reader' variable so that content of the file can be processed & read.
 - `records, err := reader.ReadAll()` allows reading all the records or rows at once from the CSV file. If unable to read CSV due to error, logging of error is done & code exited.
 
-**4. Iterating Over Records**
+**d. Iterating Over Records**
 ```	
 	// Iterate over the records and upload to etcd
 	headers := records[0]
@@ -321,7 +321,7 @@ func uploadToEtcd() { //#6
 - `serverIP` is assigned to the first column and `serverType` to the second.
 - A `serverData` variable for storing server data is created. 
 
-**4.1. Creating Server Data Dictionary**
+**d.1. Creating Server Data Dictionary**
 ```	
 	// Create server data dictionary
 	for i := 2; i < len(headers); i++ {
@@ -334,7 +334,7 @@ func uploadToEtcd() { //#6
 - It looks through column names and assigns them to variable `header`. The values inside these columns which are stored as rows are assigned to `value` variable.
 -  Using `header` as label, `value` is added to the `serverData`. This process repeats until all the headers have been used.
 
-**4.2. Setting Key-Value Pairs In ETCD For Data Fields**
+**d.2. Setting Key-Value Pairs In ETCD For Data Fields**
 ```	
 	// Set key-value pairs in etcd for each data field
 	for header, value := range serverData {
@@ -351,7 +351,7 @@ func uploadToEtcd() { //#6
 - In `etcdValue := value`, every header's value is set per iteration. 
 - `etcdClient.Put` is used to have the key-value pairs entered into the etcd. If an error occurs, it is logged with an error message.
 
-**4.3. Setting Key-Value Pairs In ETCD For Data Fields**
+**d.3. Setting Key-Value Pairs In ETCD For Data Fields**
 ```	
 	// Set key-value pair for server data
 	etcdKeyData := fmt.Sprintf("/servers/%s/%s/data", serverType, serverIP)

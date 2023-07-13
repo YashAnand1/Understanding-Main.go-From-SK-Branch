@@ -590,15 +590,4 @@ func main() { //#8
 ```
 - The `uploadToEtcd()` function is called to start uploading the CSV data to the etcd server.
 
-**(D) Starting API erver**
-```
-	// Start API server
-	log.Println("Starting API server...")
-	http.HandleFunc("/servers/", getServerData)
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatalf("Failed to start API server: %v", err)
-	}
-}
-```
-- ``
+____

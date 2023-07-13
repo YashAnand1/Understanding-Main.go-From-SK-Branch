@@ -366,5 +366,8 @@ func uploadToEtcd() { //#6
 		}
 	}
 ```
-- A variable called `etcdKeyData` is assigned to store an address/location of 
-  
+- A variable and etcd key called `etcdKeyData` is created with address using the format `/servers/serverType/serverIP/data`
+- A variable and etcd value called `etcdValueData` is created. `json.Marshal` converts `serverData` to JSON format, which can be easier understood by the program.
+- If an error occurs in marshalling or converting `serverData`, it is logged and the program continues with the loop.
+- Then, the `etcdValueData` value is put into the `etcdKeyData` key and uploaded to etcd. In case an error occurs in uploading server data to etcd, error is logged & printed. 
+______________________________________________

@@ -1,6 +1,6 @@
 # Understanding 'Main.go' 
 
-**Main.go Reference Link: [Click Here](https://github.com/Keen-And-Able/etcd-inventory/blob/sk/main.go)** | * Bettering The Presentation Of The Document IN PROGRESS *
+**Main.go Reference Link: [Click Here](https://github.com/Keen-And-Able/etcd-inventory/blob/sk/main.go)** | * Bettering the presentation of the document is IN PROGRESS *
 _________________
 ### 1. Packaging Program
 ```
